@@ -1,4 +1,4 @@
-module zinbuilder-genproto-go
+module github.com/igomonov88/zinbuilder-genproto-go
 
 go 1.15
 
