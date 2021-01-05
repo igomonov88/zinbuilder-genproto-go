@@ -4,6 +4,7 @@ package user
 
 import (
 	context "context"
+
 	grpc "google.golang.org/grpc"
 	codes "google.golang.org/grpc/codes"
 	status "google.golang.org/grpc/status"
@@ -38,21 +39,19 @@ func (c *gatewayClient) CreateUser(ctx context.Context, in *CreateUserRequest, o
 }
 
 // GatewayServer is the server API for Gateway service.
-// All implementations must embed UnimplementedGatewayServer
+// All implementations should embed UnimplementedGatewayServer
 // for forward compatibility
 type GatewayServer interface {
 	CreateUser(context.Context, *CreateUserRequest) (*CreateUserResponse, error)
-	mustEmbedUnimplementedGatewayServer()
 }
 
-// UnimplementedGatewayServer must be embedded to have forward compatible implementations.
+// UnimplementedGatewayServer should be embedded to have forward compatible implementations.
 type UnimplementedGatewayServer struct {
 }
 
 func (UnimplementedGatewayServer) CreateUser(context.Context, *CreateUserRequest) (*CreateUserResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method CreateUser not implemented")
 }
-func (UnimplementedGatewayServer) mustEmbedUnimplementedGatewayServer() {}
 
 // UnsafeGatewayServer may be embedded to opt out of forward compatibility for this service.
 // Use of this interface is not recommended, as added methods to GatewayServer will

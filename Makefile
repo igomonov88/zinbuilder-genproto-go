@@ -10,6 +10,7 @@ gateway:
 	--grpc-gateway_out=. \
 	--go-grpc_out=. \
     --go-grpc_opt=module=${GENPROTO_GO_MODULE} \
+    --go-grpc_opt=require_unimplemented_servers=false \
 	${APIS}/ms-gateway/v1/*.proto
 
 DIRS = $$(go list -f {{.Dir}} ./...)

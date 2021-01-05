@@ -1,6 +1,6 @@
 // +build tools
 
-package genproto
+package zinbuilder_genproto_go
 
 import (
 	_ "golang.org/x/tools/cmd/goimports"
