@@ -10,4 +10,5 @@ require (
 	google.golang.org/grpc v1.33.1
 	google.golang.org/grpc/cmd/protoc-gen-go-grpc v1.0.1
 	google.golang.org/protobuf v1.25.0
+	github.com/mwitkow/go-proto-validators v0.3.2
 )
