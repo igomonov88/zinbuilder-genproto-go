@@ -8,6 +8,7 @@ import (
 	grpc "google.golang.org/grpc"
 	codes "google.golang.org/grpc/codes"
 	status "google.golang.org/grpc/status"
+	emptypb "google.golang.org/protobuf/types/known/emptypb"
 )
 
 // This is a compile-time assertion to ensure that this generated file
@@ -19,6 +20,12 @@ const _ = grpc.SupportPackageIsVersion7
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
 type GatewayClient interface {
 	CreateUser(ctx context.Context, in *CreateUserRequest, opts ...grpc.CallOption) (*CreateUserResponse, error)
+	GetUser(ctx context.Context, in *GetUserRequest, opts ...grpc.CallOption) (*GetUserResponse, error)
+	UpdateUserInfo(ctx context.Context, in *UpdateUserInfoRequest, opts ...grpc.CallOption) (*UpdateUserInfoResponse, error)
+	UpdateUserEmail(ctx context.Context, in *UpdateUserEmailRequest, opts ...grpc.CallOption) (*emptypb.Empty, error)
+	UpdateUserPassword(ctx context.Context, in *UpdateUserPasswordRequest, opts ...grpc.CallOption) (*emptypb.Empty, error)
+	ListUsers(ctx context.Context, in *ListUsersRequest, opts ...grpc.CallOption) (*ListUsersResponse, error)
+	DeleteUser(ctx context.Context, in *DeleteUserRequest, opts ...grpc.CallOption) (*emptypb.Empty, error)
 }
 
 type gatewayClient struct {
@@ -38,11 +45,71 @@ func (c *gatewayClient) CreateUser(ctx context.Context, in *CreateUserRequest, o
 	return out, nil
 }
 
+func (c *gatewayClient) GetUser(ctx context.Context, in *GetUserRequest, opts ...grpc.CallOption) (*GetUserResponse, error) {
+	out := new(GetUserResponse)
+	err := c.cc.Invoke(ctx, "/ms_gateway.v1.Gateway/GetUser", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *gatewayClient) UpdateUserInfo(ctx context.Context, in *UpdateUserInfoRequest, opts ...grpc.CallOption) (*UpdateUserInfoResponse, error) {
+	out := new(UpdateUserInfoResponse)
+	err := c.cc.Invoke(ctx, "/ms_gateway.v1.Gateway/UpdateUserInfo", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *gatewayClient) UpdateUserEmail(ctx context.Context, in *UpdateUserEmailRequest, opts ...grpc.CallOption) (*emptypb.Empty, error) {
+	out := new(emptypb.Empty)
+	err := c.cc.Invoke(ctx, "/ms_gateway.v1.Gateway/UpdateUserEmail", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *gatewayClient) UpdateUserPassword(ctx context.Context, in *UpdateUserPasswordRequest, opts ...grpc.CallOption) (*emptypb.Empty, error) {
+	out := new(emptypb.Empty)
+	err := c.cc.Invoke(ctx, "/ms_gateway.v1.Gateway/UpdateUserPassword", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *gatewayClient) ListUsers(ctx context.Context, in *ListUsersRequest, opts ...grpc.CallOption) (*ListUsersResponse, error) {
+	out := new(ListUsersResponse)
+	err := c.cc.Invoke(ctx, "/ms_gateway.v1.Gateway/ListUsers", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *gatewayClient) DeleteUser(ctx context.Context, in *DeleteUserRequest, opts ...grpc.CallOption) (*emptypb.Empty, error) {
+	out := new(emptypb.Empty)
+	err := c.cc.Invoke(ctx, "/ms_gateway.v1.Gateway/DeleteUser", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // GatewayServer is the server API for Gateway service.
 // All implementations should embed UnimplementedGatewayServer
 // for forward compatibility
 type GatewayServer interface {
 	CreateUser(context.Context, *CreateUserRequest) (*CreateUserResponse, error)
+	GetUser(context.Context, *GetUserRequest) (*GetUserResponse, error)
+	UpdateUserInfo(context.Context, *UpdateUserInfoRequest) (*UpdateUserInfoResponse, error)
+	UpdateUserEmail(context.Context, *UpdateUserEmailRequest) (*emptypb.Empty, error)
+	UpdateUserPassword(context.Context, *UpdateUserPasswordRequest) (*emptypb.Empty, error)
+	ListUsers(context.Context, *ListUsersRequest) (*ListUsersResponse, error)
+	DeleteUser(context.Context, *DeleteUserRequest) (*emptypb.Empty, error)
 }
 
 // UnimplementedGatewayServer should be embedded to have forward compatible implementations.
@@ -51,6 +118,24 @@ type UnimplementedGatewayServer struct {
 
 func (UnimplementedGatewayServer) CreateUser(context.Context, *CreateUserRequest) (*CreateUserResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method CreateUser not implemented")
+}
+func (UnimplementedGatewayServer) GetUser(context.Context, *GetUserRequest) (*GetUserResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetUser not implemented")
+}
+func (UnimplementedGatewayServer) UpdateUserInfo(context.Context, *UpdateUserInfoRequest) (*UpdateUserInfoResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method UpdateUserInfo not implemented")
+}
+func (UnimplementedGatewayServer) UpdateUserEmail(context.Context, *UpdateUserEmailRequest) (*emptypb.Empty, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method UpdateUserEmail not implemented")
+}
+func (UnimplementedGatewayServer) UpdateUserPassword(context.Context, *UpdateUserPasswordRequest) (*emptypb.Empty, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method UpdateUserPassword not implemented")
+}
+func (UnimplementedGatewayServer) ListUsers(context.Context, *ListUsersRequest) (*ListUsersResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method ListUsers not implemented")
+}
+func (UnimplementedGatewayServer) DeleteUser(context.Context, *DeleteUserRequest) (*emptypb.Empty, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method DeleteUser not implemented")
 }
 
 // UnsafeGatewayServer may be embedded to opt out of forward compatibility for this service.
@@ -82,6 +167,114 @@ func _Gateway_CreateUser_Handler(srv interface{}, ctx context.Context, dec func(
 	return interceptor(ctx, in, info, handler)
 }
 
+func _Gateway_GetUser_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(GetUserRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(GatewayServer).GetUser(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/ms_gateway.v1.Gateway/GetUser",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(GatewayServer).GetUser(ctx, req.(*GetUserRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _Gateway_UpdateUserInfo_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(UpdateUserInfoRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(GatewayServer).UpdateUserInfo(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/ms_gateway.v1.Gateway/UpdateUserInfo",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(GatewayServer).UpdateUserInfo(ctx, req.(*UpdateUserInfoRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _Gateway_UpdateUserEmail_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(UpdateUserEmailRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(GatewayServer).UpdateUserEmail(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/ms_gateway.v1.Gateway/UpdateUserEmail",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(GatewayServer).UpdateUserEmail(ctx, req.(*UpdateUserEmailRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _Gateway_UpdateUserPassword_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(UpdateUserPasswordRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(GatewayServer).UpdateUserPassword(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/ms_gateway.v1.Gateway/UpdateUserPassword",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(GatewayServer).UpdateUserPassword(ctx, req.(*UpdateUserPasswordRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _Gateway_ListUsers_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(ListUsersRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(GatewayServer).ListUsers(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/ms_gateway.v1.Gateway/ListUsers",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(GatewayServer).ListUsers(ctx, req.(*ListUsersRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _Gateway_DeleteUser_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(DeleteUserRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(GatewayServer).DeleteUser(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/ms_gateway.v1.Gateway/DeleteUser",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(GatewayServer).DeleteUser(ctx, req.(*DeleteUserRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 var _Gateway_serviceDesc = grpc.ServiceDesc{
 	ServiceName: "ms_gateway.v1.Gateway",
 	HandlerType: (*GatewayServer)(nil),
@@ -89,6 +282,30 @@ var _Gateway_serviceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "CreateUser",
 			Handler:    _Gateway_CreateUser_Handler,
+		},
+		{
+			MethodName: "GetUser",
+			Handler:    _Gateway_GetUser_Handler,
+		},
+		{
+			MethodName: "UpdateUserInfo",
+			Handler:    _Gateway_UpdateUserInfo_Handler,
+		},
+		{
+			MethodName: "UpdateUserEmail",
+			Handler:    _Gateway_UpdateUserEmail_Handler,
+		},
+		{
+			MethodName: "UpdateUserPassword",
+			Handler:    _Gateway_UpdateUserPassword_Handler,
+		},
+		{
+			MethodName: "ListUsers",
+			Handler:    _Gateway_ListUsers_Handler,
+		},
+		{
+			MethodName: "DeleteUser",
+			Handler:    _Gateway_DeleteUser_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},
