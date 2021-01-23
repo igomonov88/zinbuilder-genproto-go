@@ -19,6 +19,7 @@ const _ = grpc.SupportPackageIsVersion7
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
 type RateLimiterClient interface {
 	Echo(ctx context.Context, in *EchoRequest, opts ...grpc.CallOption) (*EchoResponse, error)
+	DoesRequestAllowed(ctx context.Context, in *AllowRequest, opts ...grpc.CallOption) (*AllowResponse, error)
 }
 
 type rateLimiterClient struct {
@@ -38,11 +39,21 @@ func (c *rateLimiterClient) Echo(ctx context.Context, in *EchoRequest, opts ...g
 	return out, nil
 }
 
+func (c *rateLimiterClient) DoesRequestAllowed(ctx context.Context, in *AllowRequest, opts ...grpc.CallOption) (*AllowResponse, error) {
+	out := new(AllowResponse)
+	err := c.cc.Invoke(ctx, "/ms_rate_limiter.v1.RateLimiter/DoesRequestAllowed", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // RateLimiterServer is the server API for RateLimiter service.
 // All implementations should embed UnimplementedRateLimiterServer
 // for forward compatibility
 type RateLimiterServer interface {
 	Echo(context.Context, *EchoRequest) (*EchoResponse, error)
+	DoesRequestAllowed(context.Context, *AllowRequest) (*AllowResponse, error)
 }
 
 // UnimplementedRateLimiterServer should be embedded to have forward compatible implementations.
@@ -51,6 +62,9 @@ type UnimplementedRateLimiterServer struct {
 
 func (UnimplementedRateLimiterServer) Echo(context.Context, *EchoRequest) (*EchoResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method Echo not implemented")
+}
+func (UnimplementedRateLimiterServer) DoesRequestAllowed(context.Context, *AllowRequest) (*AllowResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method DoesRequestAllowed not implemented")
 }
 
 // UnsafeRateLimiterServer may be embedded to opt out of forward compatibility for this service.
@@ -82,6 +96,24 @@ func _RateLimiter_Echo_Handler(srv interface{}, ctx context.Context, dec func(in
 	return interceptor(ctx, in, info, handler)
 }
 
+func _RateLimiter_DoesRequestAllowed_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(AllowRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(RateLimiterServer).DoesRequestAllowed(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/ms_rate_limiter.v1.RateLimiter/DoesRequestAllowed",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(RateLimiterServer).DoesRequestAllowed(ctx, req.(*AllowRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 var _RateLimiter_serviceDesc = grpc.ServiceDesc{
 	ServiceName: "ms_rate_limiter.v1.RateLimiter",
 	HandlerType: (*RateLimiterServer)(nil),
@@ -89,6 +121,10 @@ var _RateLimiter_serviceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "Echo",
 			Handler:    _RateLimiter_Echo_Handler,
+		},
+		{
+			MethodName: "DoesRequestAllowed",
+			Handler:    _RateLimiter_DoesRequestAllowed_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},
