@@ -1,4 +1,4 @@
-all: gateway ratelimiter format
+all: gateway ratelimiter users auth format
 
 gateway:
 	protoc \
@@ -27,6 +27,32 @@ ratelimiter:
     --go-grpc_opt=module=${GENPROTO_GO_MODULE} \
     --go-grpc_opt=require_unimplemented_servers=false \
 	${APIS}/ms-rate-limiter/v1/*.proto
+
+DIRS = $$(go list -f {{.Dir}} ./...)
+
+users:
+	protoc \
+	-I ${API_COMMON_PROTOS} \
+	-I ${APIS} \
+    --go_out=. \
+    --go_opt=module=${GENPROTO_GO_MODULE} \
+	--go-grpc_out=. \
+    --go-grpc_opt=module=${GENPROTO_GO_MODULE} \
+    --go-grpc_opt=require_unimplemented_servers=false \
+	${APIS}/ms-users/v1/*.proto
+
+DIRS = $$(go list -f {{.Dir}} ./...)
+
+auth:
+	protoc \
+	-I ${API_COMMON_PROTOS} \
+	-I ${APIS} \
+    --go_out=. \
+    --go_opt=module=${GENPROTO_GO_MODULE} \
+	--go-grpc_out=. \
+    --go-grpc_opt=module=${GENPROTO_GO_MODULE} \
+    --go-grpc_opt=require_unimplemented_servers=false \
+	${APIS}/ms-auth/v1/*.proto
 
 DIRS = $$(go list -f {{.Dir}} ./...)
 
