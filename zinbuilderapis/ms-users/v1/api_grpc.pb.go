@@ -20,7 +20,7 @@ const _ = grpc.SupportPackageIsVersion7
 type UsersClient interface {
 	CreateUser(ctx context.Context, in *CreateUserRequest, opts ...grpc.CallOption) (*CreateUserResponse, error)
 	UpdateUser(ctx context.Context, in *UpdateUserRequest, opts ...grpc.CallOption) (*UpdateUserResponse, error)
-	IsEmailUnique(ctx context.Context, in *IsEmailUniqueRequest, opts ...grpc.CallOption) (*IsEmailUniqueResponse, error)
+	IsEmailExists(ctx context.Context, in *IsEmailExistsRequest, opts ...grpc.CallOption) (*IsEmailExistsResponse, error)
 	DeleteUser(ctx context.Context, in *DeleteUserRequest, opts ...grpc.CallOption) (*emptypb.Empty, error)
 	UpdateEmail(ctx context.Context, in *UpdateEmailRequest, opts ...grpc.CallOption) (*emptypb.Empty, error)
 	GetUser(ctx context.Context, in *GetUserRequest, opts ...grpc.CallOption) (*GetUserResponse, error)
@@ -52,9 +52,9 @@ func (c *usersClient) UpdateUser(ctx context.Context, in *UpdateUserRequest, opt
 	return out, nil
 }
 
-func (c *usersClient) IsEmailUnique(ctx context.Context, in *IsEmailUniqueRequest, opts ...grpc.CallOption) (*IsEmailUniqueResponse, error) {
-	out := new(IsEmailUniqueResponse)
-	err := c.cc.Invoke(ctx, "/ms_users.v1.Users/IsEmailUnique", in, out, opts...)
+func (c *usersClient) IsEmailExists(ctx context.Context, in *IsEmailExistsRequest, opts ...grpc.CallOption) (*IsEmailExistsResponse, error) {
+	out := new(IsEmailExistsResponse)
+	err := c.cc.Invoke(ctx, "/ms_users.v1.Users/IsEmailExists", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -94,7 +94,7 @@ func (c *usersClient) GetUser(ctx context.Context, in *GetUserRequest, opts ...g
 type UsersServer interface {
 	CreateUser(context.Context, *CreateUserRequest) (*CreateUserResponse, error)
 	UpdateUser(context.Context, *UpdateUserRequest) (*UpdateUserResponse, error)
-	IsEmailUnique(context.Context, *IsEmailUniqueRequest) (*IsEmailUniqueResponse, error)
+	IsEmailExists(context.Context, *IsEmailExistsRequest) (*IsEmailExistsResponse, error)
 	DeleteUser(context.Context, *DeleteUserRequest) (*emptypb.Empty, error)
 	UpdateEmail(context.Context, *UpdateEmailRequest) (*emptypb.Empty, error)
 	GetUser(context.Context, *GetUserRequest) (*GetUserResponse, error)
@@ -110,8 +110,8 @@ func (UnimplementedUsersServer) CreateUser(context.Context, *CreateUserRequest) 
 func (UnimplementedUsersServer) UpdateUser(context.Context, *UpdateUserRequest) (*UpdateUserResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method UpdateUser not implemented")
 }
-func (UnimplementedUsersServer) IsEmailUnique(context.Context, *IsEmailUniqueRequest) (*IsEmailUniqueResponse, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method IsEmailUnique not implemented")
+func (UnimplementedUsersServer) IsEmailExists(context.Context, *IsEmailExistsRequest) (*IsEmailExistsResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method IsEmailExists not implemented")
 }
 func (UnimplementedUsersServer) DeleteUser(context.Context, *DeleteUserRequest) (*emptypb.Empty, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method DeleteUser not implemented")
@@ -170,20 +170,20 @@ func _Users_UpdateUser_Handler(srv interface{}, ctx context.Context, dec func(in
 	return interceptor(ctx, in, info, handler)
 }
 
-func _Users_IsEmailUnique_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(IsEmailUniqueRequest)
+func _Users_IsEmailExists_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(IsEmailExistsRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(UsersServer).IsEmailUnique(ctx, in)
+		return srv.(UsersServer).IsEmailExists(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/ms_users.v1.Users/IsEmailUnique",
+		FullMethod: "/ms_users.v1.Users/IsEmailExists",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(UsersServer).IsEmailUnique(ctx, req.(*IsEmailUniqueRequest))
+		return srv.(UsersServer).IsEmailExists(ctx, req.(*IsEmailExistsRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
@@ -255,8 +255,8 @@ var _Users_serviceDesc = grpc.ServiceDesc{
 			Handler:    _Users_UpdateUser_Handler,
 		},
 		{
-			MethodName: "IsEmailUnique",
-			Handler:    _Users_IsEmailUnique_Handler,
+			MethodName: "IsEmailExists",
+			Handler:    _Users_IsEmailExists_Handler,
 		},
 		{
 			MethodName: "DeleteUser",

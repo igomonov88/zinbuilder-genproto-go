@@ -322,7 +322,7 @@ func (x *UpdateUserResponse) GetEmail() string {
 	return ""
 }
 
-type IsEmailUniqueRequest struct {
+type IsEmailExistsRequest struct {
 	state         protoimpl.MessageState
 	sizeCache     protoimpl.SizeCache
 	unknownFields protoimpl.UnknownFields
@@ -330,8 +330,8 @@ type IsEmailUniqueRequest struct {
 	Email string `protobuf:"bytes,1,opt,name=email,proto3" json:"email,omitempty"`
 }
 
-func (x *IsEmailUniqueRequest) Reset() {
-	*x = IsEmailUniqueRequest{}
+func (x *IsEmailExistsRequest) Reset() {
+	*x = IsEmailExistsRequest{}
 	if protoimpl.UnsafeEnabled {
 		mi := &file_ms_users_v1_api_proto_msgTypes[4]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
@@ -339,13 +339,13 @@ func (x *IsEmailUniqueRequest) Reset() {
 	}
 }
 
-func (x *IsEmailUniqueRequest) String() string {
+func (x *IsEmailExistsRequest) String() string {
 	return protoimpl.X.MessageStringOf(x)
 }
 
-func (*IsEmailUniqueRequest) ProtoMessage() {}
+func (*IsEmailExistsRequest) ProtoMessage() {}
 
-func (x *IsEmailUniqueRequest) ProtoReflect() protoreflect.Message {
+func (x *IsEmailExistsRequest) ProtoReflect() protoreflect.Message {
 	mi := &file_ms_users_v1_api_proto_msgTypes[4]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
@@ -357,19 +357,19 @@ func (x *IsEmailUniqueRequest) ProtoReflect() protoreflect.Message {
 	return mi.MessageOf(x)
 }
 
-// Deprecated: Use IsEmailUniqueRequest.ProtoReflect.Descriptor instead.
-func (*IsEmailUniqueRequest) Descriptor() ([]byte, []int) {
+// Deprecated: Use IsEmailExistsRequest.ProtoReflect.Descriptor instead.
+func (*IsEmailExistsRequest) Descriptor() ([]byte, []int) {
 	return file_ms_users_v1_api_proto_rawDescGZIP(), []int{4}
 }
 
-func (x *IsEmailUniqueRequest) GetEmail() string {
+func (x *IsEmailExistsRequest) GetEmail() string {
 	if x != nil {
 		return x.Email
 	}
 	return ""
 }
 
-type IsEmailUniqueResponse struct {
+type IsEmailExistsResponse struct {
 	state         protoimpl.MessageState
 	sizeCache     protoimpl.SizeCache
 	unknownFields protoimpl.UnknownFields
@@ -377,8 +377,8 @@ type IsEmailUniqueResponse struct {
 	Unique bool `protobuf:"varint,1,opt,name=unique,proto3" json:"unique,omitempty"`
 }
 
-func (x *IsEmailUniqueResponse) Reset() {
-	*x = IsEmailUniqueResponse{}
+func (x *IsEmailExistsResponse) Reset() {
+	*x = IsEmailExistsResponse{}
 	if protoimpl.UnsafeEnabled {
 		mi := &file_ms_users_v1_api_proto_msgTypes[5]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
@@ -386,13 +386,13 @@ func (x *IsEmailUniqueResponse) Reset() {
 	}
 }
 
-func (x *IsEmailUniqueResponse) String() string {
+func (x *IsEmailExistsResponse) String() string {
 	return protoimpl.X.MessageStringOf(x)
 }
 
-func (*IsEmailUniqueResponse) ProtoMessage() {}
+func (*IsEmailExistsResponse) ProtoMessage() {}
 
-func (x *IsEmailUniqueResponse) ProtoReflect() protoreflect.Message {
+func (x *IsEmailExistsResponse) ProtoReflect() protoreflect.Message {
 	mi := &file_ms_users_v1_api_proto_msgTypes[5]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
@@ -404,12 +404,12 @@ func (x *IsEmailUniqueResponse) ProtoReflect() protoreflect.Message {
 	return mi.MessageOf(x)
 }
 
-// Deprecated: Use IsEmailUniqueResponse.ProtoReflect.Descriptor instead.
-func (*IsEmailUniqueResponse) Descriptor() ([]byte, []int) {
+// Deprecated: Use IsEmailExistsResponse.ProtoReflect.Descriptor instead.
+func (*IsEmailExistsResponse) Descriptor() ([]byte, []int) {
 	return file_ms_users_v1_api_proto_rawDescGZIP(), []int{5}
 }
 
-func (x *IsEmailUniqueResponse) GetUnique() bool {
+func (x *IsEmailExistsResponse) GetUnique() bool {
 	if x != nil {
 		return x.Unique
 	}
@@ -681,11 +681,11 @@ var file_ms_users_v1_api_proto_rawDesc = []byte{
 	0x61, 0x6d, 0x69, 0x6c, 0x79, 0x5f, 0x6e, 0x61, 0x6d, 0x65, 0x18, 0x03, 0x20, 0x01, 0x28, 0x09,
 	0x52, 0x0a, 0x66, 0x61, 0x6d, 0x69, 0x6c, 0x79, 0x4e, 0x61, 0x6d, 0x65, 0x12, 0x14, 0x0a, 0x05,
 	0x65, 0x6d, 0x61, 0x69, 0x6c, 0x18, 0x04, 0x20, 0x01, 0x28, 0x09, 0x52, 0x05, 0x65, 0x6d, 0x61,
-	0x69, 0x6c, 0x22, 0x2c, 0x0a, 0x14, 0x49, 0x73, 0x45, 0x6d, 0x61, 0x69, 0x6c, 0x55, 0x6e, 0x69,
-	0x71, 0x75, 0x65, 0x52, 0x65, 0x71, 0x75, 0x65, 0x73, 0x74, 0x12, 0x14, 0x0a, 0x05, 0x65, 0x6d,
+	0x69, 0x6c, 0x22, 0x2c, 0x0a, 0x14, 0x49, 0x73, 0x45, 0x6d, 0x61, 0x69, 0x6c, 0x45, 0x78, 0x69,
+	0x73, 0x74, 0x73, 0x52, 0x65, 0x71, 0x75, 0x65, 0x73, 0x74, 0x12, 0x14, 0x0a, 0x05, 0x65, 0x6d,
 	0x61, 0x69, 0x6c, 0x18, 0x01, 0x20, 0x01, 0x28, 0x09, 0x52, 0x05, 0x65, 0x6d, 0x61, 0x69, 0x6c,
-	0x22, 0x2f, 0x0a, 0x15, 0x49, 0x73, 0x45, 0x6d, 0x61, 0x69, 0x6c, 0x55, 0x6e, 0x69, 0x71, 0x75,
-	0x65, 0x52, 0x65, 0x73, 0x70, 0x6f, 0x6e, 0x73, 0x65, 0x12, 0x16, 0x0a, 0x06, 0x75, 0x6e, 0x69,
+	0x22, 0x2f, 0x0a, 0x15, 0x49, 0x73, 0x45, 0x6d, 0x61, 0x69, 0x6c, 0x45, 0x78, 0x69, 0x73, 0x74,
+	0x73, 0x52, 0x65, 0x73, 0x70, 0x6f, 0x6e, 0x73, 0x65, 0x12, 0x16, 0x0a, 0x06, 0x75, 0x6e, 0x69,
 	0x71, 0x75, 0x65, 0x18, 0x01, 0x20, 0x01, 0x28, 0x08, 0x52, 0x06, 0x75, 0x6e, 0x69, 0x71, 0x75,
 	0x65, 0x22, 0x2c, 0x0a, 0x11, 0x44, 0x65, 0x6c, 0x65, 0x74, 0x65, 0x55, 0x73, 0x65, 0x72, 0x52,
 	0x65, 0x71, 0x75, 0x65, 0x73, 0x74, 0x12, 0x17, 0x0a, 0x07, 0x75, 0x73, 0x65, 0x72, 0x5f, 0x69,
@@ -716,11 +716,11 @@ var file_ms_users_v1_api_proto_rawDesc = []byte{
 	0x65, 0x71, 0x75, 0x65, 0x73, 0x74, 0x1a, 0x1f, 0x2e, 0x6d, 0x73, 0x5f, 0x75, 0x73, 0x65, 0x72,
 	0x73, 0x2e, 0x76, 0x31, 0x2e, 0x55, 0x70, 0x64, 0x61, 0x74, 0x65, 0x55, 0x73, 0x65, 0x72, 0x52,
 	0x65, 0x73, 0x70, 0x6f, 0x6e, 0x73, 0x65, 0x22, 0x00, 0x12, 0x58, 0x0a, 0x0d, 0x49, 0x73, 0x45,
-	0x6d, 0x61, 0x69, 0x6c, 0x55, 0x6e, 0x69, 0x71, 0x75, 0x65, 0x12, 0x21, 0x2e, 0x6d, 0x73, 0x5f,
+	0x6d, 0x61, 0x69, 0x6c, 0x45, 0x78, 0x69, 0x73, 0x74, 0x73, 0x12, 0x21, 0x2e, 0x6d, 0x73, 0x5f,
 	0x75, 0x73, 0x65, 0x72, 0x73, 0x2e, 0x76, 0x31, 0x2e, 0x49, 0x73, 0x45, 0x6d, 0x61, 0x69, 0x6c,
-	0x55, 0x6e, 0x69, 0x71, 0x75, 0x65, 0x52, 0x65, 0x71, 0x75, 0x65, 0x73, 0x74, 0x1a, 0x22, 0x2e,
+	0x45, 0x78, 0x69, 0x73, 0x74, 0x73, 0x52, 0x65, 0x71, 0x75, 0x65, 0x73, 0x74, 0x1a, 0x22, 0x2e,
 	0x6d, 0x73, 0x5f, 0x75, 0x73, 0x65, 0x72, 0x73, 0x2e, 0x76, 0x31, 0x2e, 0x49, 0x73, 0x45, 0x6d,
-	0x61, 0x69, 0x6c, 0x55, 0x6e, 0x69, 0x71, 0x75, 0x65, 0x52, 0x65, 0x73, 0x70, 0x6f, 0x6e, 0x73,
+	0x61, 0x69, 0x6c, 0x45, 0x78, 0x69, 0x73, 0x74, 0x73, 0x52, 0x65, 0x73, 0x70, 0x6f, 0x6e, 0x73,
 	0x65, 0x22, 0x00, 0x12, 0x46, 0x0a, 0x0a, 0x44, 0x65, 0x6c, 0x65, 0x74, 0x65, 0x55, 0x73, 0x65,
 	0x72, 0x12, 0x1e, 0x2e, 0x6d, 0x73, 0x5f, 0x75, 0x73, 0x65, 0x72, 0x73, 0x2e, 0x76, 0x31, 0x2e,
 	0x44, 0x65, 0x6c, 0x65, 0x74, 0x65, 0x55, 0x73, 0x65, 0x72, 0x52, 0x65, 0x71, 0x75, 0x65, 0x73,
@@ -761,8 +761,8 @@ var file_ms_users_v1_api_proto_goTypes = []interface{}{
 	(*CreateUserResponse)(nil),    // 1: ms_users.v1.CreateUserResponse
 	(*UpdateUserRequest)(nil),     // 2: ms_users.v1.UpdateUserRequest
 	(*UpdateUserResponse)(nil),    // 3: ms_users.v1.UpdateUserResponse
-	(*IsEmailUniqueRequest)(nil),  // 4: ms_users.v1.IsEmailUniqueRequest
-	(*IsEmailUniqueResponse)(nil), // 5: ms_users.v1.IsEmailUniqueResponse
+	(*IsEmailExistsRequest)(nil),  // 4: ms_users.v1.IsEmailExistsRequest
+	(*IsEmailExistsResponse)(nil), // 5: ms_users.v1.IsEmailExistsResponse
 	(*DeleteUserRequest)(nil),     // 6: ms_users.v1.DeleteUserRequest
 	(*UpdateEmailRequest)(nil),    // 7: ms_users.v1.UpdateEmailRequest
 	(*GetUserRequest)(nil),        // 8: ms_users.v1.GetUserRequest
@@ -772,13 +772,13 @@ var file_ms_users_v1_api_proto_goTypes = []interface{}{
 var file_ms_users_v1_api_proto_depIdxs = []int32{
 	0,  // 0: ms_users.v1.Users.CreateUser:input_type -> ms_users.v1.CreateUserRequest
 	2,  // 1: ms_users.v1.Users.UpdateUser:input_type -> ms_users.v1.UpdateUserRequest
-	4,  // 2: ms_users.v1.Users.IsEmailUnique:input_type -> ms_users.v1.IsEmailUniqueRequest
+	4,  // 2: ms_users.v1.Users.IsEmailExists:input_type -> ms_users.v1.IsEmailExistsRequest
 	6,  // 3: ms_users.v1.Users.DeleteUser:input_type -> ms_users.v1.DeleteUserRequest
 	7,  // 4: ms_users.v1.Users.UpdateEmail:input_type -> ms_users.v1.UpdateEmailRequest
 	8,  // 5: ms_users.v1.Users.GetUser:input_type -> ms_users.v1.GetUserRequest
 	1,  // 6: ms_users.v1.Users.CreateUser:output_type -> ms_users.v1.CreateUserResponse
 	3,  // 7: ms_users.v1.Users.UpdateUser:output_type -> ms_users.v1.UpdateUserResponse
-	5,  // 8: ms_users.v1.Users.IsEmailUnique:output_type -> ms_users.v1.IsEmailUniqueResponse
+	5,  // 8: ms_users.v1.Users.IsEmailExists:output_type -> ms_users.v1.IsEmailExistsResponse
 	10, // 9: ms_users.v1.Users.DeleteUser:output_type -> google.protobuf.Empty
 	10, // 10: ms_users.v1.Users.UpdateEmail:output_type -> google.protobuf.Empty
 	9,  // 11: ms_users.v1.Users.GetUser:output_type -> ms_users.v1.GetUserResponse
@@ -844,7 +844,7 @@ func file_ms_users_v1_api_proto_init() {
 			}
 		}
 		file_ms_users_v1_api_proto_msgTypes[4].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*IsEmailUniqueRequest); i {
+			switch v := v.(*IsEmailExistsRequest); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -856,7 +856,7 @@ func file_ms_users_v1_api_proto_init() {
 			}
 		}
 		file_ms_users_v1_api_proto_msgTypes[5].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*IsEmailUniqueResponse); i {
+			switch v := v.(*IsEmailExistsResponse); i {
 			case 0:
 				return &v.state
 			case 1:
