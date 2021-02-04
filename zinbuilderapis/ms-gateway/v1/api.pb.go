@@ -740,7 +740,7 @@ func (x *User) GetEmail() string {
 	return ""
 }
 
-type IsEmailUniqueRequest struct {
+type IsEmailExistsRequest struct {
 	state         protoimpl.MessageState
 	sizeCache     protoimpl.SizeCache
 	unknownFields protoimpl.UnknownFields
@@ -748,8 +748,8 @@ type IsEmailUniqueRequest struct {
 	Email string `protobuf:"bytes,1,opt,name=email,proto3" json:"email,omitempty"`
 }
 
-func (x *IsEmailUniqueRequest) Reset() {
-	*x = IsEmailUniqueRequest{}
+func (x *IsEmailExistsRequest) Reset() {
+	*x = IsEmailExistsRequest{}
 	if protoimpl.UnsafeEnabled {
 		mi := &file_ms_gateway_v1_api_proto_msgTypes[12]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
@@ -757,13 +757,13 @@ func (x *IsEmailUniqueRequest) Reset() {
 	}
 }
 
-func (x *IsEmailUniqueRequest) String() string {
+func (x *IsEmailExistsRequest) String() string {
 	return protoimpl.X.MessageStringOf(x)
 }
 
-func (*IsEmailUniqueRequest) ProtoMessage() {}
+func (*IsEmailExistsRequest) ProtoMessage() {}
 
-func (x *IsEmailUniqueRequest) ProtoReflect() protoreflect.Message {
+func (x *IsEmailExistsRequest) ProtoReflect() protoreflect.Message {
 	mi := &file_ms_gateway_v1_api_proto_msgTypes[12]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
@@ -775,19 +775,19 @@ func (x *IsEmailUniqueRequest) ProtoReflect() protoreflect.Message {
 	return mi.MessageOf(x)
 }
 
-// Deprecated: Use IsEmailUniqueRequest.ProtoReflect.Descriptor instead.
-func (*IsEmailUniqueRequest) Descriptor() ([]byte, []int) {
+// Deprecated: Use IsEmailExistsRequest.ProtoReflect.Descriptor instead.
+func (*IsEmailExistsRequest) Descriptor() ([]byte, []int) {
 	return file_ms_gateway_v1_api_proto_rawDescGZIP(), []int{12}
 }
 
-func (x *IsEmailUniqueRequest) GetEmail() string {
+func (x *IsEmailExistsRequest) GetEmail() string {
 	if x != nil {
 		return x.Email
 	}
 	return ""
 }
 
-type IsEmailUniqueResponse struct {
+type IsEmailExistsResponse struct {
 	state         protoimpl.MessageState
 	sizeCache     protoimpl.SizeCache
 	unknownFields protoimpl.UnknownFields
@@ -795,8 +795,8 @@ type IsEmailUniqueResponse struct {
 	Unique bool `protobuf:"varint,1,opt,name=unique,proto3" json:"unique,omitempty"`
 }
 
-func (x *IsEmailUniqueResponse) Reset() {
-	*x = IsEmailUniqueResponse{}
+func (x *IsEmailExistsResponse) Reset() {
+	*x = IsEmailExistsResponse{}
 	if protoimpl.UnsafeEnabled {
 		mi := &file_ms_gateway_v1_api_proto_msgTypes[13]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
@@ -804,13 +804,13 @@ func (x *IsEmailUniqueResponse) Reset() {
 	}
 }
 
-func (x *IsEmailUniqueResponse) String() string {
+func (x *IsEmailExistsResponse) String() string {
 	return protoimpl.X.MessageStringOf(x)
 }
 
-func (*IsEmailUniqueResponse) ProtoMessage() {}
+func (*IsEmailExistsResponse) ProtoMessage() {}
 
-func (x *IsEmailUniqueResponse) ProtoReflect() protoreflect.Message {
+func (x *IsEmailExistsResponse) ProtoReflect() protoreflect.Message {
 	mi := &file_ms_gateway_v1_api_proto_msgTypes[13]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
@@ -822,12 +822,12 @@ func (x *IsEmailUniqueResponse) ProtoReflect() protoreflect.Message {
 	return mi.MessageOf(x)
 }
 
-// Deprecated: Use IsEmailUniqueResponse.ProtoReflect.Descriptor instead.
-func (*IsEmailUniqueResponse) Descriptor() ([]byte, []int) {
+// Deprecated: Use IsEmailExistsResponse.ProtoReflect.Descriptor instead.
+func (*IsEmailExistsResponse) Descriptor() ([]byte, []int) {
 	return file_ms_gateway_v1_api_proto_rawDescGZIP(), []int{13}
 }
 
-func (x *IsEmailUniqueResponse) GetUnique() bool {
+func (x *IsEmailExistsResponse) GetUnique() bool {
 	if x != nil {
 		return x.Unique
 	}
@@ -1289,11 +1289,11 @@ var file_ms_gateway_v1_api_proto_rawDesc = []byte{
 	0x65, 0x18, 0x03, 0x20, 0x01, 0x28, 0x09, 0x42, 0x03, 0xe0, 0x41, 0x02, 0x52, 0x0a, 0x66, 0x61,
 	0x6d, 0x69, 0x6c, 0x79, 0x4e, 0x61, 0x6d, 0x65, 0x12, 0x19, 0x0a, 0x05, 0x65, 0x6d, 0x61, 0x69,
 	0x6c, 0x18, 0x04, 0x20, 0x01, 0x28, 0x09, 0x42, 0x03, 0xe0, 0x41, 0x02, 0x52, 0x05, 0x65, 0x6d,
-	0x61, 0x69, 0x6c, 0x22, 0x31, 0x0a, 0x14, 0x49, 0x73, 0x45, 0x6d, 0x61, 0x69, 0x6c, 0x55, 0x6e,
-	0x69, 0x71, 0x75, 0x65, 0x52, 0x65, 0x71, 0x75, 0x65, 0x73, 0x74, 0x12, 0x19, 0x0a, 0x05, 0x65,
+	0x61, 0x69, 0x6c, 0x22, 0x31, 0x0a, 0x14, 0x49, 0x73, 0x45, 0x6d, 0x61, 0x69, 0x6c, 0x45, 0x78,
+	0x69, 0x73, 0x74, 0x73, 0x52, 0x65, 0x71, 0x75, 0x65, 0x73, 0x74, 0x12, 0x19, 0x0a, 0x05, 0x65,
 	0x6d, 0x61, 0x69, 0x6c, 0x18, 0x01, 0x20, 0x01, 0x28, 0x09, 0x42, 0x03, 0xe0, 0x41, 0x02, 0x52,
 	0x05, 0x65, 0x6d, 0x61, 0x69, 0x6c, 0x22, 0x34, 0x0a, 0x15, 0x49, 0x73, 0x45, 0x6d, 0x61, 0x69,
-	0x6c, 0x55, 0x6e, 0x69, 0x71, 0x75, 0x65, 0x52, 0x65, 0x73, 0x70, 0x6f, 0x6e, 0x73, 0x65, 0x12,
+	0x6c, 0x45, 0x78, 0x69, 0x73, 0x74, 0x73, 0x52, 0x65, 0x73, 0x70, 0x6f, 0x6e, 0x73, 0x65, 0x12,
 	0x1b, 0x0a, 0x06, 0x75, 0x6e, 0x69, 0x71, 0x75, 0x65, 0x18, 0x01, 0x20, 0x01, 0x28, 0x08, 0x42,
 	0x03, 0xe0, 0x41, 0x02, 0x52, 0x06, 0x75, 0x6e, 0x69, 0x71, 0x75, 0x65, 0x22, 0x54, 0x0a, 0x12,
 	0x55, 0x70, 0x64, 0x61, 0x74, 0x65, 0x45, 0x6d, 0x61, 0x69, 0x6c, 0x52, 0x65, 0x71, 0x75, 0x65,
@@ -1377,12 +1377,12 @@ var file_ms_gateway_v1_api_proto_rawDesc = []byte{
 	0x75, 0x65, 0x73, 0x74, 0x1a, 0x16, 0x2e, 0x67, 0x6f, 0x6f, 0x67, 0x6c, 0x65, 0x2e, 0x70, 0x72,
 	0x6f, 0x74, 0x6f, 0x62, 0x75, 0x66, 0x2e, 0x45, 0x6d, 0x70, 0x74, 0x79, 0x22, 0x14, 0x82, 0xd3,
 	0xe4, 0x93, 0x02, 0x0e, 0x2a, 0x0c, 0x2f, 0x76, 0x31, 0x2f, 0x75, 0x73, 0x65, 0x72, 0x73, 0x2f,
-	0x6d, 0x65, 0x12, 0x76, 0x0a, 0x0d, 0x49, 0x73, 0x45, 0x6d, 0x61, 0x69, 0x6c, 0x55, 0x6e, 0x69,
-	0x71, 0x75, 0x65, 0x12, 0x23, 0x2e, 0x6d, 0x73, 0x5f, 0x67, 0x61, 0x74, 0x65, 0x77, 0x61, 0x79,
-	0x2e, 0x76, 0x31, 0x2e, 0x49, 0x73, 0x45, 0x6d, 0x61, 0x69, 0x6c, 0x55, 0x6e, 0x69, 0x71, 0x75,
-	0x65, 0x52, 0x65, 0x71, 0x75, 0x65, 0x73, 0x74, 0x1a, 0x24, 0x2e, 0x6d, 0x73, 0x5f, 0x67, 0x61,
+	0x6d, 0x65, 0x12, 0x76, 0x0a, 0x0d, 0x49, 0x73, 0x45, 0x6d, 0x61, 0x69, 0x6c, 0x45, 0x78, 0x69,
+	0x73, 0x74, 0x73, 0x12, 0x23, 0x2e, 0x6d, 0x73, 0x5f, 0x67, 0x61, 0x74, 0x65, 0x77, 0x61, 0x79,
+	0x2e, 0x76, 0x31, 0x2e, 0x49, 0x73, 0x45, 0x6d, 0x61, 0x69, 0x6c, 0x45, 0x78, 0x69, 0x73, 0x74,
+	0x73, 0x52, 0x65, 0x71, 0x75, 0x65, 0x73, 0x74, 0x1a, 0x24, 0x2e, 0x6d, 0x73, 0x5f, 0x67, 0x61,
 	0x74, 0x65, 0x77, 0x61, 0x79, 0x2e, 0x76, 0x31, 0x2e, 0x49, 0x73, 0x45, 0x6d, 0x61, 0x69, 0x6c,
-	0x55, 0x6e, 0x69, 0x71, 0x75, 0x65, 0x52, 0x65, 0x73, 0x70, 0x6f, 0x6e, 0x73, 0x65, 0x22, 0x1a,
+	0x45, 0x78, 0x69, 0x73, 0x74, 0x73, 0x52, 0x65, 0x73, 0x70, 0x6f, 0x6e, 0x73, 0x65, 0x22, 0x1a,
 	0x82, 0xd3, 0xe4, 0x93, 0x02, 0x14, 0x22, 0x0f, 0x2f, 0x76, 0x31, 0x2f, 0x75, 0x73, 0x65, 0x72,
 	0x73, 0x2f, 0x65, 0x6d, 0x61, 0x69, 0x6c, 0x3a, 0x01, 0x2a, 0x12, 0x64, 0x0a, 0x0b, 0x55, 0x70,
 	0x64, 0x61, 0x74, 0x65, 0x45, 0x6d, 0x61, 0x69, 0x6c, 0x12, 0x21, 0x2e, 0x6d, 0x73, 0x5f, 0x67,
@@ -1455,8 +1455,8 @@ var file_ms_gateway_v1_api_proto_goTypes = []interface{}{
 	(*ListUsersResponse)(nil),         // 9: ms_gateway.v1.ListUsersResponse
 	(*DeleteUserRequest)(nil),         // 10: ms_gateway.v1.DeleteUserRequest
 	(*User)(nil),                      // 11: ms_gateway.v1.User
-	(*IsEmailUniqueRequest)(nil),      // 12: ms_gateway.v1.IsEmailUniqueRequest
-	(*IsEmailUniqueResponse)(nil),     // 13: ms_gateway.v1.IsEmailUniqueResponse
+	(*IsEmailExistsRequest)(nil),      // 12: ms_gateway.v1.IsEmailExistsRequest
+	(*IsEmailExistsResponse)(nil),     // 13: ms_gateway.v1.IsEmailExistsResponse
 	(*UpdateEmailRequest)(nil),        // 14: ms_gateway.v1.UpdateEmailRequest
 	(*AuthRequest)(nil),               // 15: ms_gateway.v1.AuthRequest
 	(*AuthResponse)(nil),              // 16: ms_gateway.v1.AuthResponse
@@ -1477,7 +1477,7 @@ var file_ms_gateway_v1_api_proto_depIdxs = []int32{
 	7,  // 7: ms_gateway.v1.Gateway.UpdateUserPassword:input_type -> ms_gateway.v1.UpdateUserPasswordRequest
 	8,  // 8: ms_gateway.v1.Gateway.ListUsers:input_type -> ms_gateway.v1.ListUsersRequest
 	10, // 9: ms_gateway.v1.Gateway.DeleteUser:input_type -> ms_gateway.v1.DeleteUserRequest
-	12, // 10: ms_gateway.v1.Gateway.IsEmailUnique:input_type -> ms_gateway.v1.IsEmailUniqueRequest
+	12, // 10: ms_gateway.v1.Gateway.IsEmailExists:input_type -> ms_gateway.v1.IsEmailExistsRequest
 	14, // 11: ms_gateway.v1.Gateway.UpdateEmail:input_type -> ms_gateway.v1.UpdateEmailRequest
 	15, // 12: ms_gateway.v1.Gateway.Authenticate:input_type -> ms_gateway.v1.AuthRequest
 	17, // 13: ms_gateway.v1.Gateway.ValidateToken:input_type -> ms_gateway.v1.ValidateTokenRequest
@@ -1490,7 +1490,7 @@ var file_ms_gateway_v1_api_proto_depIdxs = []int32{
 	21, // 20: ms_gateway.v1.Gateway.UpdateUserPassword:output_type -> google.protobuf.Empty
 	9,  // 21: ms_gateway.v1.Gateway.ListUsers:output_type -> ms_gateway.v1.ListUsersResponse
 	21, // 22: ms_gateway.v1.Gateway.DeleteUser:output_type -> google.protobuf.Empty
-	13, // 23: ms_gateway.v1.Gateway.IsEmailUnique:output_type -> ms_gateway.v1.IsEmailUniqueResponse
+	13, // 23: ms_gateway.v1.Gateway.IsEmailExists:output_type -> ms_gateway.v1.IsEmailExistsResponse
 	21, // 24: ms_gateway.v1.Gateway.UpdateEmail:output_type -> google.protobuf.Empty
 	16, // 25: ms_gateway.v1.Gateway.Authenticate:output_type -> ms_gateway.v1.AuthResponse
 	18, // 26: ms_gateway.v1.Gateway.ValidateToken:output_type -> ms_gateway.v1.ValidateTokenResponse
@@ -1654,7 +1654,7 @@ func file_ms_gateway_v1_api_proto_init() {
 			}
 		}
 		file_ms_gateway_v1_api_proto_msgTypes[12].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*IsEmailUniqueRequest); i {
+			switch v := v.(*IsEmailExistsRequest); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -1666,7 +1666,7 @@ func file_ms_gateway_v1_api_proto_init() {
 			}
 		}
 		file_ms_gateway_v1_api_proto_msgTypes[13].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*IsEmailUniqueResponse); i {
+			switch v := v.(*IsEmailExistsResponse); i {
 			case 0:
 				return &v.state
 			case 1:

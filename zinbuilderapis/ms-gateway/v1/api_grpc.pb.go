@@ -25,7 +25,7 @@ type GatewayClient interface {
 	UpdateUserPassword(ctx context.Context, in *UpdateUserPasswordRequest, opts ...grpc.CallOption) (*emptypb.Empty, error)
 	ListUsers(ctx context.Context, in *ListUsersRequest, opts ...grpc.CallOption) (*ListUsersResponse, error)
 	DeleteUser(ctx context.Context, in *DeleteUserRequest, opts ...grpc.CallOption) (*emptypb.Empty, error)
-	IsEmailUnique(ctx context.Context, in *IsEmailUniqueRequest, opts ...grpc.CallOption) (*IsEmailUniqueResponse, error)
+	IsEmailExists(ctx context.Context, in *IsEmailExistsRequest, opts ...grpc.CallOption) (*IsEmailExistsResponse, error)
 	UpdateEmail(ctx context.Context, in *UpdateEmailRequest, opts ...grpc.CallOption) (*emptypb.Empty, error)
 	Authenticate(ctx context.Context, in *AuthRequest, opts ...grpc.CallOption) (*AuthResponse, error)
 	ValidateToken(ctx context.Context, in *ValidateTokenRequest, opts ...grpc.CallOption) (*ValidateTokenResponse, error)
@@ -104,9 +104,9 @@ func (c *gatewayClient) DeleteUser(ctx context.Context, in *DeleteUserRequest, o
 	return out, nil
 }
 
-func (c *gatewayClient) IsEmailUnique(ctx context.Context, in *IsEmailUniqueRequest, opts ...grpc.CallOption) (*IsEmailUniqueResponse, error) {
-	out := new(IsEmailUniqueResponse)
-	err := c.cc.Invoke(ctx, "/ms_gateway.v1.Gateway/IsEmailUnique", in, out, opts...)
+func (c *gatewayClient) IsEmailExists(ctx context.Context, in *IsEmailExistsRequest, opts ...grpc.CallOption) (*IsEmailExistsResponse, error) {
+	out := new(IsEmailExistsResponse)
+	err := c.cc.Invoke(ctx, "/ms_gateway.v1.Gateway/IsEmailExists", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -169,7 +169,7 @@ type GatewayServer interface {
 	UpdateUserPassword(context.Context, *UpdateUserPasswordRequest) (*emptypb.Empty, error)
 	ListUsers(context.Context, *ListUsersRequest) (*ListUsersResponse, error)
 	DeleteUser(context.Context, *DeleteUserRequest) (*emptypb.Empty, error)
-	IsEmailUnique(context.Context, *IsEmailUniqueRequest) (*IsEmailUniqueResponse, error)
+	IsEmailExists(context.Context, *IsEmailExistsRequest) (*IsEmailExistsResponse, error)
 	UpdateEmail(context.Context, *UpdateEmailRequest) (*emptypb.Empty, error)
 	Authenticate(context.Context, *AuthRequest) (*AuthResponse, error)
 	ValidateToken(context.Context, *ValidateTokenRequest) (*ValidateTokenResponse, error)
@@ -202,8 +202,8 @@ func (UnimplementedGatewayServer) ListUsers(context.Context, *ListUsersRequest) 
 func (UnimplementedGatewayServer) DeleteUser(context.Context, *DeleteUserRequest) (*emptypb.Empty, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method DeleteUser not implemented")
 }
-func (UnimplementedGatewayServer) IsEmailUnique(context.Context, *IsEmailUniqueRequest) (*IsEmailUniqueResponse, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method IsEmailUnique not implemented")
+func (UnimplementedGatewayServer) IsEmailExists(context.Context, *IsEmailExistsRequest) (*IsEmailExistsResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method IsEmailExists not implemented")
 }
 func (UnimplementedGatewayServer) UpdateEmail(context.Context, *UpdateEmailRequest) (*emptypb.Empty, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method UpdateEmail not implemented")
@@ -358,20 +358,20 @@ func _Gateway_DeleteUser_Handler(srv interface{}, ctx context.Context, dec func(
 	return interceptor(ctx, in, info, handler)
 }
 
-func _Gateway_IsEmailUnique_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(IsEmailUniqueRequest)
+func _Gateway_IsEmailExists_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(IsEmailExistsRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(GatewayServer).IsEmailUnique(ctx, in)
+		return srv.(GatewayServer).IsEmailExists(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/ms_gateway.v1.Gateway/IsEmailUnique",
+		FullMethod: "/ms_gateway.v1.Gateway/IsEmailExists",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(GatewayServer).IsEmailUnique(ctx, req.(*IsEmailUniqueRequest))
+		return srv.(GatewayServer).IsEmailExists(ctx, req.(*IsEmailExistsRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
@@ -499,8 +499,8 @@ var _Gateway_serviceDesc = grpc.ServiceDesc{
 			Handler:    _Gateway_DeleteUser_Handler,
 		},
 		{
-			MethodName: "IsEmailUnique",
-			Handler:    _Gateway_IsEmailUnique_Handler,
+			MethodName: "IsEmailExists",
+			Handler:    _Gateway_IsEmailExists_Handler,
 		},
 		{
 			MethodName: "UpdateEmail",
