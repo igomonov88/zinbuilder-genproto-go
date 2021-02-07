@@ -61,7 +61,7 @@ func (c *usersClient) Watch(ctx context.Context, in *emptypb.Empty, opts ...grpc
 }
 
 type Users_WatchClient interface {
-	Recv() (*HealthCheckResponse, error)
+	Recv() (*WatchResponse, error)
 	grpc.ClientStream
 }
 
@@ -69,8 +69,8 @@ type usersWatchClient struct {
 	grpc.ClientStream
 }
 
-func (x *usersWatchClient) Recv() (*HealthCheckResponse, error) {
-	m := new(HealthCheckResponse)
+func (x *usersWatchClient) Recv() (*WatchResponse, error) {
+	m := new(WatchResponse)
 	if err := x.ClientStream.RecvMsg(m); err != nil {
 		return nil, err
 	}
@@ -212,7 +212,7 @@ func _Users_Watch_Handler(srv interface{}, stream grpc.ServerStream) error {
 }
 
 type Users_WatchServer interface {
-	Send(*HealthCheckResponse) error
+	Send(*WatchResponse) error
 	grpc.ServerStream
 }
 
@@ -220,7 +220,7 @@ type usersWatchServer struct {
 	grpc.ServerStream
 }
 
-func (x *usersWatchServer) Send(m *HealthCheckResponse) error {
+func (x *usersWatchServer) Send(m *WatchResponse) error {
 	return x.ServerStream.SendMsg(m)
 }
 
