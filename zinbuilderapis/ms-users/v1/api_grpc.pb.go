@@ -19,6 +19,7 @@ const _ = grpc.SupportPackageIsVersion7
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
 type UsersClient interface {
 	Check(ctx context.Context, in *emptypb.Empty, opts ...grpc.CallOption) (*HealthCheckResponse, error)
+	Watch(ctx context.Context, in *emptypb.Empty, opts ...grpc.CallOption) (Users_WatchClient, error)
 	CreateUser(ctx context.Context, in *CreateUserRequest, opts ...grpc.CallOption) (*CreateUserResponse, error)
 	UpdateUser(ctx context.Context, in *UpdateUserRequest, opts ...grpc.CallOption) (*UpdateUserResponse, error)
 	IsEmailExists(ctx context.Context, in *IsEmailExistsRequest, opts ...grpc.CallOption) (*IsEmailExistsResponse, error)
@@ -42,6 +43,38 @@ func (c *usersClient) Check(ctx context.Context, in *emptypb.Empty, opts ...grpc
 		return nil, err
 	}
 	return out, nil
+}
+
+func (c *usersClient) Watch(ctx context.Context, in *emptypb.Empty, opts ...grpc.CallOption) (Users_WatchClient, error) {
+	stream, err := c.cc.NewStream(ctx, &_Users_serviceDesc.Streams[0], "/ms_users.v1.Users/Watch", opts...)
+	if err != nil {
+		return nil, err
+	}
+	x := &usersWatchClient{stream}
+	if err := x.ClientStream.SendMsg(in); err != nil {
+		return nil, err
+	}
+	if err := x.ClientStream.CloseSend(); err != nil {
+		return nil, err
+	}
+	return x, nil
+}
+
+type Users_WatchClient interface {
+	Recv() (*HealthCheckResponse, error)
+	grpc.ClientStream
+}
+
+type usersWatchClient struct {
+	grpc.ClientStream
+}
+
+func (x *usersWatchClient) Recv() (*HealthCheckResponse, error) {
+	m := new(HealthCheckResponse)
+	if err := x.ClientStream.RecvMsg(m); err != nil {
+		return nil, err
+	}
+	return m, nil
 }
 
 func (c *usersClient) CreateUser(ctx context.Context, in *CreateUserRequest, opts ...grpc.CallOption) (*CreateUserResponse, error) {
@@ -103,6 +136,7 @@ func (c *usersClient) GetUser(ctx context.Context, in *GetUserRequest, opts ...g
 // for forward compatibility
 type UsersServer interface {
 	Check(context.Context, *emptypb.Empty) (*HealthCheckResponse, error)
+	Watch(*emptypb.Empty, Users_WatchServer) error
 	CreateUser(context.Context, *CreateUserRequest) (*CreateUserResponse, error)
 	UpdateUser(context.Context, *UpdateUserRequest) (*UpdateUserResponse, error)
 	IsEmailExists(context.Context, *IsEmailExistsRequest) (*IsEmailExistsResponse, error)
@@ -117,6 +151,9 @@ type UnimplementedUsersServer struct {
 
 func (UnimplementedUsersServer) Check(context.Context, *emptypb.Empty) (*HealthCheckResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method Check not implemented")
+}
+func (UnimplementedUsersServer) Watch(*emptypb.Empty, Users_WatchServer) error {
+	return status.Errorf(codes.Unimplemented, "method Watch not implemented")
 }
 func (UnimplementedUsersServer) CreateUser(context.Context, *CreateUserRequest) (*CreateUserResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method CreateUser not implemented")
@@ -164,6 +201,27 @@ func _Users_Check_Handler(srv interface{}, ctx context.Context, dec func(interfa
 		return srv.(UsersServer).Check(ctx, req.(*emptypb.Empty))
 	}
 	return interceptor(ctx, in, info, handler)
+}
+
+func _Users_Watch_Handler(srv interface{}, stream grpc.ServerStream) error {
+	m := new(emptypb.Empty)
+	if err := stream.RecvMsg(m); err != nil {
+		return err
+	}
+	return srv.(UsersServer).Watch(m, &usersWatchServer{stream})
+}
+
+type Users_WatchServer interface {
+	Send(*HealthCheckResponse) error
+	grpc.ServerStream
+}
+
+type usersWatchServer struct {
+	grpc.ServerStream
+}
+
+func (x *usersWatchServer) Send(m *HealthCheckResponse) error {
+	return x.ServerStream.SendMsg(m)
 }
 
 func _Users_CreateUser_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
@@ -307,6 +365,12 @@ var _Users_serviceDesc = grpc.ServiceDesc{
 			Handler:    _Users_GetUser_Handler,
 		},
 	},
-	Streams:  []grpc.StreamDesc{},
+	Streams: []grpc.StreamDesc{
+		{
+			StreamName:    "Watch",
+			Handler:       _Users_Watch_Handler,
+			ServerStreams: true,
+		},
+	},
 	Metadata: "ms-users/v1/api.proto",
 }
