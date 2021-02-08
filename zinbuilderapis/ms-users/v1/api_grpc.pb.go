@@ -19,7 +19,7 @@ const _ = grpc.SupportPackageIsVersion7
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
 type UsersClient interface {
 	Check(ctx context.Context, in *HeathCheckRequest, opts ...grpc.CallOption) (*HealthCheckResponse, error)
-	Watch(ctx context.Context, in *emptypb.Empty, opts ...grpc.CallOption) (Users_WatchClient, error)
+	Watch(ctx context.Context, in *HeathCheckRequest, opts ...grpc.CallOption) (Users_WatchClient, error)
 	CreateUser(ctx context.Context, in *CreateUserRequest, opts ...grpc.CallOption) (*CreateUserResponse, error)
 	UpdateUser(ctx context.Context, in *UpdateUserRequest, opts ...grpc.CallOption) (*UpdateUserResponse, error)
 	IsEmailExists(ctx context.Context, in *IsEmailExistsRequest, opts ...grpc.CallOption) (*IsEmailExistsResponse, error)
@@ -45,7 +45,7 @@ func (c *usersClient) Check(ctx context.Context, in *HeathCheckRequest, opts ...
 	return out, nil
 }
 
-func (c *usersClient) Watch(ctx context.Context, in *emptypb.Empty, opts ...grpc.CallOption) (Users_WatchClient, error) {
+func (c *usersClient) Watch(ctx context.Context, in *HeathCheckRequest, opts ...grpc.CallOption) (Users_WatchClient, error) {
 	stream, err := c.cc.NewStream(ctx, &_Users_serviceDesc.Streams[0], "/ms_users.v1.Users/Watch", opts...)
 	if err != nil {
 		return nil, err
@@ -136,7 +136,7 @@ func (c *usersClient) GetUser(ctx context.Context, in *GetUserRequest, opts ...g
 // for forward compatibility
 type UsersServer interface {
 	Check(context.Context, *HeathCheckRequest) (*HealthCheckResponse, error)
-	Watch(*emptypb.Empty, Users_WatchServer) error
+	Watch(*HeathCheckRequest, Users_WatchServer) error
 	CreateUser(context.Context, *CreateUserRequest) (*CreateUserResponse, error)
 	UpdateUser(context.Context, *UpdateUserRequest) (*UpdateUserResponse, error)
 	IsEmailExists(context.Context, *IsEmailExistsRequest) (*IsEmailExistsResponse, error)
@@ -152,7 +152,7 @@ type UnimplementedUsersServer struct {
 func (UnimplementedUsersServer) Check(context.Context, *HeathCheckRequest) (*HealthCheckResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method Check not implemented")
 }
-func (UnimplementedUsersServer) Watch(*emptypb.Empty, Users_WatchServer) error {
+func (UnimplementedUsersServer) Watch(*HeathCheckRequest, Users_WatchServer) error {
 	return status.Errorf(codes.Unimplemented, "method Watch not implemented")
 }
 func (UnimplementedUsersServer) CreateUser(context.Context, *CreateUserRequest) (*CreateUserResponse, error) {
@@ -204,7 +204,7 @@ func _Users_Check_Handler(srv interface{}, ctx context.Context, dec func(interfa
 }
 
 func _Users_Watch_Handler(srv interface{}, stream grpc.ServerStream) error {
-	m := new(emptypb.Empty)
+	m := new(HeathCheckRequest)
 	if err := stream.RecvMsg(m); err != nil {
 		return err
 	}
