@@ -18,7 +18,7 @@ const _ = grpc.SupportPackageIsVersion7
 //
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
 type UsersClient interface {
-	Check(ctx context.Context, in *emptypb.Empty, opts ...grpc.CallOption) (*HealthCheckResponse, error)
+	Check(ctx context.Context, in *HeathCheckRequest, opts ...grpc.CallOption) (*HealthCheckResponse, error)
 	Watch(ctx context.Context, in *emptypb.Empty, opts ...grpc.CallOption) (Users_WatchClient, error)
 	CreateUser(ctx context.Context, in *CreateUserRequest, opts ...grpc.CallOption) (*CreateUserResponse, error)
 	UpdateUser(ctx context.Context, in *UpdateUserRequest, opts ...grpc.CallOption) (*UpdateUserResponse, error)
@@ -36,7 +36,7 @@ func NewUsersClient(cc grpc.ClientConnInterface) UsersClient {
 	return &usersClient{cc}
 }
 
-func (c *usersClient) Check(ctx context.Context, in *emptypb.Empty, opts ...grpc.CallOption) (*HealthCheckResponse, error) {
+func (c *usersClient) Check(ctx context.Context, in *HeathCheckRequest, opts ...grpc.CallOption) (*HealthCheckResponse, error) {
 	out := new(HealthCheckResponse)
 	err := c.cc.Invoke(ctx, "/ms_users.v1.Users/Check", in, out, opts...)
 	if err != nil {
@@ -135,7 +135,7 @@ func (c *usersClient) GetUser(ctx context.Context, in *GetUserRequest, opts ...g
 // All implementations should embed UnimplementedUsersServer
 // for forward compatibility
 type UsersServer interface {
-	Check(context.Context, *emptypb.Empty) (*HealthCheckResponse, error)
+	Check(context.Context, *HeathCheckRequest) (*HealthCheckResponse, error)
 	Watch(*emptypb.Empty, Users_WatchServer) error
 	CreateUser(context.Context, *CreateUserRequest) (*CreateUserResponse, error)
 	UpdateUser(context.Context, *UpdateUserRequest) (*UpdateUserResponse, error)
@@ -149,7 +149,7 @@ type UsersServer interface {
 type UnimplementedUsersServer struct {
 }
 
-func (UnimplementedUsersServer) Check(context.Context, *emptypb.Empty) (*HealthCheckResponse, error) {
+func (UnimplementedUsersServer) Check(context.Context, *HeathCheckRequest) (*HealthCheckResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method Check not implemented")
 }
 func (UnimplementedUsersServer) Watch(*emptypb.Empty, Users_WatchServer) error {
@@ -186,7 +186,7 @@ func RegisterUsersServer(s grpc.ServiceRegistrar, srv UsersServer) {
 }
 
 func _Users_Check_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(emptypb.Empty)
+	in := new(HeathCheckRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
@@ -198,7 +198,7 @@ func _Users_Check_Handler(srv interface{}, ctx context.Context, dec func(interfa
 		FullMethod: "/ms_users.v1.Users/Check",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(UsersServer).Check(ctx, req.(*emptypb.Empty))
+		return srv.(UsersServer).Check(ctx, req.(*HeathCheckRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
