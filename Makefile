@@ -1,4 +1,4 @@
-all: gateway ratelimiter users auth format
+all: gateway ratelimiter users auth diabet-profile format
 
 gateway:
 	protoc \
@@ -53,6 +53,19 @@ auth:
     --go-grpc_opt=module=${GENPROTO_GO_MODULE} \
     --go-grpc_opt=require_unimplemented_servers=false \
 	${APIS}/ms-auth/v1/*.proto
+
+DIRS = $$(go list -f {{.Dir}} ./...)
+
+diabet-profile:
+	protoc \
+	-I ${API_COMMON_PROTOS} \
+	-I ${APIS} \
+    --go_out=. \
+    --go_opt=module=${GENPROTO_GO_MODULE} \
+	--go-grpc_out=. \
+    --go-grpc_opt=module=${GENPROTO_GO_MODULE} \
+    --go-grpc_opt=require_unimplemented_servers=false \
+	${APIS}/ms-diabet-profile/v1/*.proto
 
 DIRS = $$(go list -f {{.Dir}} ./...)
 

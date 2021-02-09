@@ -30,6 +30,11 @@ type GatewayClient interface {
 	ValidateToken(ctx context.Context, in *ValidateTokenRequest, opts ...grpc.CallOption) (*ValidateTokenResponse, error)
 	ChangePassword(ctx context.Context, in *ChangePasswordRequest, opts ...grpc.CallOption) (*emptypb.Empty, error)
 	ForgotPassword(ctx context.Context, in *ForgotPasswordRequest, opts ...grpc.CallOption) (*emptypb.Empty, error)
+	CreateProfile(ctx context.Context, in *CreateProfileRequest, opts ...grpc.CallOption) (*emptypb.Empty, error)
+	UpdateProfile(ctx context.Context, in *CreateProfileRequest, opts ...grpc.CallOption) (*emptypb.Empty, error)
+	GetProfile(ctx context.Context, in *GetProfileRequest, opts ...grpc.CallOption) (*GetProfileResponse, error)
+	ChangeUnitsType(ctx context.Context, in *ChangeUnitsTypeRequest, opts ...grpc.CallOption) (*emptypb.Empty, error)
+	DeleteProfile(ctx context.Context, in *DeleteProfileRequest, opts ...grpc.CallOption) (*emptypb.Empty, error)
 }
 
 type gatewayClient struct {
@@ -139,6 +144,51 @@ func (c *gatewayClient) ForgotPassword(ctx context.Context, in *ForgotPasswordRe
 	return out, nil
 }
 
+func (c *gatewayClient) CreateProfile(ctx context.Context, in *CreateProfileRequest, opts ...grpc.CallOption) (*emptypb.Empty, error) {
+	out := new(emptypb.Empty)
+	err := c.cc.Invoke(ctx, "/ms_gateway.v1.Gateway/CreateProfile", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *gatewayClient) UpdateProfile(ctx context.Context, in *CreateProfileRequest, opts ...grpc.CallOption) (*emptypb.Empty, error) {
+	out := new(emptypb.Empty)
+	err := c.cc.Invoke(ctx, "/ms_gateway.v1.Gateway/UpdateProfile", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *gatewayClient) GetProfile(ctx context.Context, in *GetProfileRequest, opts ...grpc.CallOption) (*GetProfileResponse, error) {
+	out := new(GetProfileResponse)
+	err := c.cc.Invoke(ctx, "/ms_gateway.v1.Gateway/GetProfile", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *gatewayClient) ChangeUnitsType(ctx context.Context, in *ChangeUnitsTypeRequest, opts ...grpc.CallOption) (*emptypb.Empty, error) {
+	out := new(emptypb.Empty)
+	err := c.cc.Invoke(ctx, "/ms_gateway.v1.Gateway/ChangeUnitsType", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *gatewayClient) DeleteProfile(ctx context.Context, in *DeleteProfileRequest, opts ...grpc.CallOption) (*emptypb.Empty, error) {
+	out := new(emptypb.Empty)
+	err := c.cc.Invoke(ctx, "/ms_gateway.v1.Gateway/DeleteProfile", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // GatewayServer is the server API for Gateway service.
 // All implementations should embed UnimplementedGatewayServer
 // for forward compatibility
@@ -154,6 +204,11 @@ type GatewayServer interface {
 	ValidateToken(context.Context, *ValidateTokenRequest) (*ValidateTokenResponse, error)
 	ChangePassword(context.Context, *ChangePasswordRequest) (*emptypb.Empty, error)
 	ForgotPassword(context.Context, *ForgotPasswordRequest) (*emptypb.Empty, error)
+	CreateProfile(context.Context, *CreateProfileRequest) (*emptypb.Empty, error)
+	UpdateProfile(context.Context, *CreateProfileRequest) (*emptypb.Empty, error)
+	GetProfile(context.Context, *GetProfileRequest) (*GetProfileResponse, error)
+	ChangeUnitsType(context.Context, *ChangeUnitsTypeRequest) (*emptypb.Empty, error)
+	DeleteProfile(context.Context, *DeleteProfileRequest) (*emptypb.Empty, error)
 }
 
 // UnimplementedGatewayServer should be embedded to have forward compatible implementations.
@@ -192,6 +247,21 @@ func (UnimplementedGatewayServer) ChangePassword(context.Context, *ChangePasswor
 }
 func (UnimplementedGatewayServer) ForgotPassword(context.Context, *ForgotPasswordRequest) (*emptypb.Empty, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method ForgotPassword not implemented")
+}
+func (UnimplementedGatewayServer) CreateProfile(context.Context, *CreateProfileRequest) (*emptypb.Empty, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method CreateProfile not implemented")
+}
+func (UnimplementedGatewayServer) UpdateProfile(context.Context, *CreateProfileRequest) (*emptypb.Empty, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method UpdateProfile not implemented")
+}
+func (UnimplementedGatewayServer) GetProfile(context.Context, *GetProfileRequest) (*GetProfileResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetProfile not implemented")
+}
+func (UnimplementedGatewayServer) ChangeUnitsType(context.Context, *ChangeUnitsTypeRequest) (*emptypb.Empty, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method ChangeUnitsType not implemented")
+}
+func (UnimplementedGatewayServer) DeleteProfile(context.Context, *DeleteProfileRequest) (*emptypb.Empty, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method DeleteProfile not implemented")
 }
 
 // UnsafeGatewayServer may be embedded to opt out of forward compatibility for this service.
@@ -403,6 +473,96 @@ func _Gateway_ForgotPassword_Handler(srv interface{}, ctx context.Context, dec f
 	return interceptor(ctx, in, info, handler)
 }
 
+func _Gateway_CreateProfile_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(CreateProfileRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(GatewayServer).CreateProfile(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/ms_gateway.v1.Gateway/CreateProfile",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(GatewayServer).CreateProfile(ctx, req.(*CreateProfileRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _Gateway_UpdateProfile_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(CreateProfileRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(GatewayServer).UpdateProfile(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/ms_gateway.v1.Gateway/UpdateProfile",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(GatewayServer).UpdateProfile(ctx, req.(*CreateProfileRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _Gateway_GetProfile_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(GetProfileRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(GatewayServer).GetProfile(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/ms_gateway.v1.Gateway/GetProfile",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(GatewayServer).GetProfile(ctx, req.(*GetProfileRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _Gateway_ChangeUnitsType_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(ChangeUnitsTypeRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(GatewayServer).ChangeUnitsType(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/ms_gateway.v1.Gateway/ChangeUnitsType",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(GatewayServer).ChangeUnitsType(ctx, req.(*ChangeUnitsTypeRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _Gateway_DeleteProfile_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(DeleteProfileRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(GatewayServer).DeleteProfile(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/ms_gateway.v1.Gateway/DeleteProfile",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(GatewayServer).DeleteProfile(ctx, req.(*DeleteProfileRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 var _Gateway_serviceDesc = grpc.ServiceDesc{
 	ServiceName: "ms_gateway.v1.Gateway",
 	HandlerType: (*GatewayServer)(nil),
@@ -450,6 +610,26 @@ var _Gateway_serviceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "ForgotPassword",
 			Handler:    _Gateway_ForgotPassword_Handler,
+		},
+		{
+			MethodName: "CreateProfile",
+			Handler:    _Gateway_CreateProfile_Handler,
+		},
+		{
+			MethodName: "UpdateProfile",
+			Handler:    _Gateway_UpdateProfile_Handler,
+		},
+		{
+			MethodName: "GetProfile",
+			Handler:    _Gateway_GetProfile_Handler,
+		},
+		{
+			MethodName: "ChangeUnitsType",
+			Handler:    _Gateway_ChangeUnitsType_Handler,
+		},
+		{
+			MethodName: "DeleteProfile",
+			Handler:    _Gateway_DeleteProfile_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},
