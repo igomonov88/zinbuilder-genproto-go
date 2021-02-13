@@ -20,7 +20,6 @@ const _ = grpc.SupportPackageIsVersion7
 type GatewayClient interface {
 	CreateUser(ctx context.Context, in *CreateUserRequest, opts ...grpc.CallOption) (*CreateUserResponse, error)
 	GetUser(ctx context.Context, in *GetUserRequest, opts ...grpc.CallOption) (*GetUserResponse, error)
-	UpdateUser(ctx context.Context, in *UpdateUserRequest, opts ...grpc.CallOption) (*UpdateUserResponse, error)
 	ListUsers(ctx context.Context, in *ListUsersRequest, opts ...grpc.CallOption) (*ListUsersResponse, error)
 	DeleteUser(ctx context.Context, in *DeleteUserRequest, opts ...grpc.CallOption) (*emptypb.Empty, error)
 	IsEmailExists(ctx context.Context, in *IsEmailExistsRequest, opts ...grpc.CallOption) (*IsEmailExistsResponse, error)
@@ -56,15 +55,6 @@ func (c *gatewayClient) CreateUser(ctx context.Context, in *CreateUserRequest, o
 func (c *gatewayClient) GetUser(ctx context.Context, in *GetUserRequest, opts ...grpc.CallOption) (*GetUserResponse, error) {
 	out := new(GetUserResponse)
 	err := c.cc.Invoke(ctx, "/ms_gateway.v1.Gateway/GetUser", in, out, opts...)
-	if err != nil {
-		return nil, err
-	}
-	return out, nil
-}
-
-func (c *gatewayClient) UpdateUser(ctx context.Context, in *UpdateUserRequest, opts ...grpc.CallOption) (*UpdateUserResponse, error) {
-	out := new(UpdateUserResponse)
-	err := c.cc.Invoke(ctx, "/ms_gateway.v1.Gateway/UpdateUser", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -194,7 +184,6 @@ func (c *gatewayClient) DeleteProfile(ctx context.Context, in *DeleteProfileRequ
 type GatewayServer interface {
 	CreateUser(context.Context, *CreateUserRequest) (*CreateUserResponse, error)
 	GetUser(context.Context, *GetUserRequest) (*GetUserResponse, error)
-	UpdateUser(context.Context, *UpdateUserRequest) (*UpdateUserResponse, error)
 	ListUsers(context.Context, *ListUsersRequest) (*ListUsersResponse, error)
 	DeleteUser(context.Context, *DeleteUserRequest) (*emptypb.Empty, error)
 	IsEmailExists(context.Context, *IsEmailExistsRequest) (*IsEmailExistsResponse, error)
@@ -219,9 +208,6 @@ func (UnimplementedGatewayServer) CreateUser(context.Context, *CreateUserRequest
 }
 func (UnimplementedGatewayServer) GetUser(context.Context, *GetUserRequest) (*GetUserResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetUser not implemented")
-}
-func (UnimplementedGatewayServer) UpdateUser(context.Context, *UpdateUserRequest) (*UpdateUserResponse, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method UpdateUser not implemented")
 }
 func (UnimplementedGatewayServer) ListUsers(context.Context, *ListUsersRequest) (*ListUsersResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method ListUsers not implemented")
@@ -306,24 +292,6 @@ func _Gateway_GetUser_Handler(srv interface{}, ctx context.Context, dec func(int
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(GatewayServer).GetUser(ctx, req.(*GetUserRequest))
-	}
-	return interceptor(ctx, in, info, handler)
-}
-
-func _Gateway_UpdateUser_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(UpdateUserRequest)
-	if err := dec(in); err != nil {
-		return nil, err
-	}
-	if interceptor == nil {
-		return srv.(GatewayServer).UpdateUser(ctx, in)
-	}
-	info := &grpc.UnaryServerInfo{
-		Server:     srv,
-		FullMethod: "/ms_gateway.v1.Gateway/UpdateUser",
-	}
-	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(GatewayServer).UpdateUser(ctx, req.(*UpdateUserRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
@@ -573,10 +541,6 @@ var _Gateway_serviceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "GetUser",
 			Handler:    _Gateway_GetUser_Handler,
-		},
-		{
-			MethodName: "UpdateUser",
-			Handler:    _Gateway_UpdateUser_Handler,
 		},
 		{
 			MethodName: "ListUsers",

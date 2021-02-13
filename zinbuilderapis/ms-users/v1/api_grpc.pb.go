@@ -19,7 +19,6 @@ const _ = grpc.SupportPackageIsVersion7
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
 type UsersClient interface {
 	CreateUser(ctx context.Context, in *CreateUserRequest, opts ...grpc.CallOption) (*CreateUserResponse, error)
-	UpdateUser(ctx context.Context, in *UpdateUserRequest, opts ...grpc.CallOption) (*UpdateUserResponse, error)
 	IsEmailExists(ctx context.Context, in *IsEmailExistsRequest, opts ...grpc.CallOption) (*IsEmailExistsResponse, error)
 	DeleteUser(ctx context.Context, in *DeleteUserRequest, opts ...grpc.CallOption) (*emptypb.Empty, error)
 	UpdateEmail(ctx context.Context, in *UpdateEmailRequest, opts ...grpc.CallOption) (*emptypb.Empty, error)
@@ -37,15 +36,6 @@ func NewUsersClient(cc grpc.ClientConnInterface) UsersClient {
 func (c *usersClient) CreateUser(ctx context.Context, in *CreateUserRequest, opts ...grpc.CallOption) (*CreateUserResponse, error) {
 	out := new(CreateUserResponse)
 	err := c.cc.Invoke(ctx, "/ms_users.v1.Users/CreateUser", in, out, opts...)
-	if err != nil {
-		return nil, err
-	}
-	return out, nil
-}
-
-func (c *usersClient) UpdateUser(ctx context.Context, in *UpdateUserRequest, opts ...grpc.CallOption) (*UpdateUserResponse, error) {
-	out := new(UpdateUserResponse)
-	err := c.cc.Invoke(ctx, "/ms_users.v1.Users/UpdateUser", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -93,7 +83,6 @@ func (c *usersClient) GetUser(ctx context.Context, in *GetUserRequest, opts ...g
 // for forward compatibility
 type UsersServer interface {
 	CreateUser(context.Context, *CreateUserRequest) (*CreateUserResponse, error)
-	UpdateUser(context.Context, *UpdateUserRequest) (*UpdateUserResponse, error)
 	IsEmailExists(context.Context, *IsEmailExistsRequest) (*IsEmailExistsResponse, error)
 	DeleteUser(context.Context, *DeleteUserRequest) (*emptypb.Empty, error)
 	UpdateEmail(context.Context, *UpdateEmailRequest) (*emptypb.Empty, error)
@@ -106,9 +95,6 @@ type UnimplementedUsersServer struct {
 
 func (UnimplementedUsersServer) CreateUser(context.Context, *CreateUserRequest) (*CreateUserResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method CreateUser not implemented")
-}
-func (UnimplementedUsersServer) UpdateUser(context.Context, *UpdateUserRequest) (*UpdateUserResponse, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method UpdateUser not implemented")
 }
 func (UnimplementedUsersServer) IsEmailExists(context.Context, *IsEmailExistsRequest) (*IsEmailExistsResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method IsEmailExists not implemented")
@@ -148,24 +134,6 @@ func _Users_CreateUser_Handler(srv interface{}, ctx context.Context, dec func(in
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(UsersServer).CreateUser(ctx, req.(*CreateUserRequest))
-	}
-	return interceptor(ctx, in, info, handler)
-}
-
-func _Users_UpdateUser_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(UpdateUserRequest)
-	if err := dec(in); err != nil {
-		return nil, err
-	}
-	if interceptor == nil {
-		return srv.(UsersServer).UpdateUser(ctx, in)
-	}
-	info := &grpc.UnaryServerInfo{
-		Server:     srv,
-		FullMethod: "/ms_users.v1.Users/UpdateUser",
-	}
-	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(UsersServer).UpdateUser(ctx, req.(*UpdateUserRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
@@ -249,10 +217,6 @@ var _Users_serviceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "CreateUser",
 			Handler:    _Users_CreateUser_Handler,
-		},
-		{
-			MethodName: "UpdateUser",
-			Handler:    _Users_UpdateUser_Handler,
 		},
 		{
 			MethodName: "IsEmailExists",
