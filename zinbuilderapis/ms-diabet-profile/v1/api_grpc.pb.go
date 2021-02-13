@@ -4,7 +4,6 @@ package profile
 
 import (
 	context "context"
-
 	grpc "google.golang.org/grpc"
 	codes "google.golang.org/grpc/codes"
 	status "google.golang.org/grpc/status"
@@ -15,10 +14,10 @@ import (
 // is compatible with the grpc package it is being compiled against.
 const _ = grpc.SupportPackageIsVersion7
 
-// AuthClient is the client API for Auth service.
+// ProfileClient is the client API for Profile service.
 //
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
-type AuthClient interface {
+type ProfileClient interface {
 	CreateProfile(ctx context.Context, in *CreateProfileRequest, opts ...grpc.CallOption) (*emptypb.Empty, error)
 	UpdateProfile(ctx context.Context, in *UpdateProfileRequest, opts ...grpc.CallOption) (*emptypb.Empty, error)
 	GetProfile(ctx context.Context, in *GetProfileRequest, opts ...grpc.CallOption) (*GetProfileResponse, error)
@@ -26,63 +25,63 @@ type AuthClient interface {
 	DeleteProfile(ctx context.Context, in *DeleteProfileRequest, opts ...grpc.CallOption) (*emptypb.Empty, error)
 }
 
-type authClient struct {
+type profileClient struct {
 	cc grpc.ClientConnInterface
 }
 
-func NewAuthClient(cc grpc.ClientConnInterface) AuthClient {
-	return &authClient{cc}
+func NewProfileClient(cc grpc.ClientConnInterface) ProfileClient {
+	return &profileClient{cc}
 }
 
-func (c *authClient) CreateProfile(ctx context.Context, in *CreateProfileRequest, opts ...grpc.CallOption) (*emptypb.Empty, error) {
+func (c *profileClient) CreateProfile(ctx context.Context, in *CreateProfileRequest, opts ...grpc.CallOption) (*emptypb.Empty, error) {
 	out := new(emptypb.Empty)
-	err := c.cc.Invoke(ctx, "/ms_diabet_profile.v1.Auth/CreateProfile", in, out, opts...)
+	err := c.cc.Invoke(ctx, "/ms_diabet_profile.v1.Profile/CreateProfile", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
 	return out, nil
 }
 
-func (c *authClient) UpdateProfile(ctx context.Context, in *UpdateProfileRequest, opts ...grpc.CallOption) (*emptypb.Empty, error) {
+func (c *profileClient) UpdateProfile(ctx context.Context, in *UpdateProfileRequest, opts ...grpc.CallOption) (*emptypb.Empty, error) {
 	out := new(emptypb.Empty)
-	err := c.cc.Invoke(ctx, "/ms_diabet_profile.v1.Auth/UpdateProfile", in, out, opts...)
+	err := c.cc.Invoke(ctx, "/ms_diabet_profile.v1.Profile/UpdateProfile", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
 	return out, nil
 }
 
-func (c *authClient) GetProfile(ctx context.Context, in *GetProfileRequest, opts ...grpc.CallOption) (*GetProfileResponse, error) {
+func (c *profileClient) GetProfile(ctx context.Context, in *GetProfileRequest, opts ...grpc.CallOption) (*GetProfileResponse, error) {
 	out := new(GetProfileResponse)
-	err := c.cc.Invoke(ctx, "/ms_diabet_profile.v1.Auth/GetProfile", in, out, opts...)
+	err := c.cc.Invoke(ctx, "/ms_diabet_profile.v1.Profile/GetProfile", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
 	return out, nil
 }
 
-func (c *authClient) ChangeUnitsType(ctx context.Context, in *ChangeUnitsTypeRequest, opts ...grpc.CallOption) (*emptypb.Empty, error) {
+func (c *profileClient) ChangeUnitsType(ctx context.Context, in *ChangeUnitsTypeRequest, opts ...grpc.CallOption) (*emptypb.Empty, error) {
 	out := new(emptypb.Empty)
-	err := c.cc.Invoke(ctx, "/ms_diabet_profile.v1.Auth/ChangeUnitsType", in, out, opts...)
+	err := c.cc.Invoke(ctx, "/ms_diabet_profile.v1.Profile/ChangeUnitsType", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
 	return out, nil
 }
 
-func (c *authClient) DeleteProfile(ctx context.Context, in *DeleteProfileRequest, opts ...grpc.CallOption) (*emptypb.Empty, error) {
+func (c *profileClient) DeleteProfile(ctx context.Context, in *DeleteProfileRequest, opts ...grpc.CallOption) (*emptypb.Empty, error) {
 	out := new(emptypb.Empty)
-	err := c.cc.Invoke(ctx, "/ms_diabet_profile.v1.Auth/DeleteProfile", in, out, opts...)
+	err := c.cc.Invoke(ctx, "/ms_diabet_profile.v1.Profile/DeleteProfile", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
 	return out, nil
 }
 
-// AuthServer is the server API for Auth service.
-// All implementations should embed UnimplementedAuthServer
+// ProfileServer is the server API for Profile service.
+// All implementations should embed UnimplementedProfileServer
 // for forward compatibility
-type AuthServer interface {
+type ProfileServer interface {
 	CreateProfile(context.Context, *CreateProfileRequest) (*emptypb.Empty, error)
 	UpdateProfile(context.Context, *UpdateProfileRequest) (*emptypb.Empty, error)
 	GetProfile(context.Context, *GetProfileRequest) (*GetProfileResponse, error)
@@ -90,150 +89,150 @@ type AuthServer interface {
 	DeleteProfile(context.Context, *DeleteProfileRequest) (*emptypb.Empty, error)
 }
 
-// UnimplementedAuthServer should be embedded to have forward compatible implementations.
-type UnimplementedAuthServer struct {
+// UnimplementedProfileServer should be embedded to have forward compatible implementations.
+type UnimplementedProfileServer struct {
 }
 
-func (UnimplementedAuthServer) CreateProfile(context.Context, *CreateProfileRequest) (*emptypb.Empty, error) {
+func (UnimplementedProfileServer) CreateProfile(context.Context, *CreateProfileRequest) (*emptypb.Empty, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method CreateProfile not implemented")
 }
-func (UnimplementedAuthServer) UpdateProfile(context.Context, *UpdateProfileRequest) (*emptypb.Empty, error) {
+func (UnimplementedProfileServer) UpdateProfile(context.Context, *UpdateProfileRequest) (*emptypb.Empty, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method UpdateProfile not implemented")
 }
-func (UnimplementedAuthServer) GetProfile(context.Context, *GetProfileRequest) (*GetProfileResponse, error) {
+func (UnimplementedProfileServer) GetProfile(context.Context, *GetProfileRequest) (*GetProfileResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetProfile not implemented")
 }
-func (UnimplementedAuthServer) ChangeUnitsType(context.Context, *ChangeUnitsTypeRequest) (*emptypb.Empty, error) {
+func (UnimplementedProfileServer) ChangeUnitsType(context.Context, *ChangeUnitsTypeRequest) (*emptypb.Empty, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method ChangeUnitsType not implemented")
 }
-func (UnimplementedAuthServer) DeleteProfile(context.Context, *DeleteProfileRequest) (*emptypb.Empty, error) {
+func (UnimplementedProfileServer) DeleteProfile(context.Context, *DeleteProfileRequest) (*emptypb.Empty, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method DeleteProfile not implemented")
 }
 
-// UnsafeAuthServer may be embedded to opt out of forward compatibility for this service.
-// Use of this interface is not recommended, as added methods to AuthServer will
+// UnsafeProfileServer may be embedded to opt out of forward compatibility for this service.
+// Use of this interface is not recommended, as added methods to ProfileServer will
 // result in compilation errors.
-type UnsafeAuthServer interface {
-	mustEmbedUnimplementedAuthServer()
+type UnsafeProfileServer interface {
+	mustEmbedUnimplementedProfileServer()
 }
 
-func RegisterAuthServer(s grpc.ServiceRegistrar, srv AuthServer) {
-	s.RegisterService(&_Auth_serviceDesc, srv)
+func RegisterProfileServer(s grpc.ServiceRegistrar, srv ProfileServer) {
+	s.RegisterService(&_Profile_serviceDesc, srv)
 }
 
-func _Auth_CreateProfile_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+func _Profile_CreateProfile_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(CreateProfileRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(AuthServer).CreateProfile(ctx, in)
+		return srv.(ProfileServer).CreateProfile(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/ms_diabet_profile.v1.Auth/CreateProfile",
+		FullMethod: "/ms_diabet_profile.v1.Profile/CreateProfile",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(AuthServer).CreateProfile(ctx, req.(*CreateProfileRequest))
+		return srv.(ProfileServer).CreateProfile(ctx, req.(*CreateProfileRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
 
-func _Auth_UpdateProfile_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+func _Profile_UpdateProfile_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(UpdateProfileRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(AuthServer).UpdateProfile(ctx, in)
+		return srv.(ProfileServer).UpdateProfile(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/ms_diabet_profile.v1.Auth/UpdateProfile",
+		FullMethod: "/ms_diabet_profile.v1.Profile/UpdateProfile",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(AuthServer).UpdateProfile(ctx, req.(*UpdateProfileRequest))
+		return srv.(ProfileServer).UpdateProfile(ctx, req.(*UpdateProfileRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
 
-func _Auth_GetProfile_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+func _Profile_GetProfile_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(GetProfileRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(AuthServer).GetProfile(ctx, in)
+		return srv.(ProfileServer).GetProfile(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/ms_diabet_profile.v1.Auth/GetProfile",
+		FullMethod: "/ms_diabet_profile.v1.Profile/GetProfile",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(AuthServer).GetProfile(ctx, req.(*GetProfileRequest))
+		return srv.(ProfileServer).GetProfile(ctx, req.(*GetProfileRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
 
-func _Auth_ChangeUnitsType_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+func _Profile_ChangeUnitsType_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(ChangeUnitsTypeRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(AuthServer).ChangeUnitsType(ctx, in)
+		return srv.(ProfileServer).ChangeUnitsType(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/ms_diabet_profile.v1.Auth/ChangeUnitsType",
+		FullMethod: "/ms_diabet_profile.v1.Profile/ChangeUnitsType",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(AuthServer).ChangeUnitsType(ctx, req.(*ChangeUnitsTypeRequest))
+		return srv.(ProfileServer).ChangeUnitsType(ctx, req.(*ChangeUnitsTypeRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
 
-func _Auth_DeleteProfile_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+func _Profile_DeleteProfile_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(DeleteProfileRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(AuthServer).DeleteProfile(ctx, in)
+		return srv.(ProfileServer).DeleteProfile(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/ms_diabet_profile.v1.Auth/DeleteProfile",
+		FullMethod: "/ms_diabet_profile.v1.Profile/DeleteProfile",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(AuthServer).DeleteProfile(ctx, req.(*DeleteProfileRequest))
+		return srv.(ProfileServer).DeleteProfile(ctx, req.(*DeleteProfileRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
 
-var _Auth_serviceDesc = grpc.ServiceDesc{
-	ServiceName: "ms_diabet_profile.v1.Auth",
-	HandlerType: (*AuthServer)(nil),
+var _Profile_serviceDesc = grpc.ServiceDesc{
+	ServiceName: "ms_diabet_profile.v1.Profile",
+	HandlerType: (*ProfileServer)(nil),
 	Methods: []grpc.MethodDesc{
 		{
 			MethodName: "CreateProfile",
-			Handler:    _Auth_CreateProfile_Handler,
+			Handler:    _Profile_CreateProfile_Handler,
 		},
 		{
 			MethodName: "UpdateProfile",
-			Handler:    _Auth_UpdateProfile_Handler,
+			Handler:    _Profile_UpdateProfile_Handler,
 		},
 		{
 			MethodName: "GetProfile",
-			Handler:    _Auth_GetProfile_Handler,
+			Handler:    _Profile_GetProfile_Handler,
 		},
 		{
 			MethodName: "ChangeUnitsType",
-			Handler:    _Auth_ChangeUnitsType_Handler,
+			Handler:    _Profile_ChangeUnitsType_Handler,
 		},
 		{
 			MethodName: "DeleteProfile",
-			Handler:    _Auth_DeleteProfile_Handler,
+			Handler:    _Profile_DeleteProfile_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},
